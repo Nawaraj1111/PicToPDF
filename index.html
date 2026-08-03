@@ -4,122 +4,130 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>JPEG to PDF Pro</title>
 
-    <link rel="stylesheet"
-          href="./index.css">
+    <link rel="stylesheet" href="./index.css">
 
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-<header>
+        <header>
 
-<h1>📄 JPEG to PDF Pro</h1>
+            <h1>📄 JPEG to PDF Pro</h1>
 
-<p>
-Convert JPG & JPEG images into a professional PDF.
-</p>
+            <p>
+                Convert JPG & JPEG images into a professional PDF.
+            </p>
 
-</header>
+        </header>
 
-<section class="upload-box" id="uploadBox">
+        <section class="upload-box" id="uploadBox">
 
-<h2>Drag & Drop Images Here</h2>
+            <h2>Drag & Drop Images Here</h2>
 
-<p>or</p>
+            <p>or</p>
 
-<button id="selectBtn">
-Select Images
-</button>
+            <button id="selectBtn">
+                Select Images
+            </button>
 
-<input
-type="file"
-id="fileInput"
-accept=".jpg,.jpeg,image/jpeg"
-multiple
-hidden>
+            <input type="file" id="fileInput" accept=".jpg,.jpeg,image/jpeg" multiple hidden>
 
-</section>
+        </section>
 
-<section class="settings">
+        
+            <section>
 
-<h2>Settings</h2>
+            <h2>Preview</h2>
 
-<div class="row">
+            <div id="preview" class="preview-grid">
 
-<label>Page Size</label>
+                <div class="empty-message">
+                    No images selected.
+                </div>
 
-<select id="pageSize">
+            </div>
 
-<option>A4</option>
+        </section>
 
-<option>Letter</option>
+        <section class="settings">
 
-<option>Legal</option>
+            <h2>Settings</h2>
 
-</select>
+            <div class="row">
 
-</div>
+                <label>Page Size</label>
 
-<div class="row">
+                <select id="pageSize">
 
-<label>Orientation</label>
+                    <option>A4</option>
 
-<select id="orientation">
+                    <option>Letter</option>
 
-<option>Portrait</option>
+                    <option>Legal</option>
 
-<option>Landscape</option>
+                </select>
 
-</select>
+            </div>
 
-</div>
+            <div class="row">
 
-<div class="row">
+                <label>Orientation</label>
 
-<label>Quality</label>
+                <select id="orientation">
 
-<select id="quality">
+                    <option>Portrait</option>
 
-<option>High</option>
+                    <option>Landscape</option>
 
-<option>Medium</option>
+                </select>
 
-<option>Low</option>
+            </div>
 
-</select>
+            <div class="row">
 
-</div>
+                <label>Quality</label>
 
-</section>
+                <select id="quality">
 
-<section>
+                    <option>High</option>
 
-<h2>Preview</h2>
+                    <option>Medium</option>
 
-<div id="preview"></div>
+                    <option>Low</option>
 
-</section>
+                </select>
 
-<div class="center">
+            </div>
 
-<button id="convertBtn">
+        </section>
 
-Convert to PDF
+        <section>
 
-</button>
+            <h2>Preview</h2>
 
-</div>
+            <div id="preview"></div>
 
-</div>
+        </section>
 
-<script src="./script.js"></script>
+        <div class="center">
+
+            <button id="convertBtn">
+
+                Convert to PDF
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="./script.js"></script>
 
 </body>
 
