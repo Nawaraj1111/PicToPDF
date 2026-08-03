@@ -4,14 +4,13 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
     <title>JPEG to PDF Pro</title>
 
     <link rel="stylesheet"
-          href="index.css">
+          href="style.css">
 
 </head>
 
@@ -19,38 +18,104 @@
 
 <div class="container">
 
-    <header>
+<header>
 
-        <h1>JPEG to PDF</h1>
+<h1>📄 JPEG to PDF Pro</h1>
 
-        <p>
-            Convert JPG and JPEG images into one PDF.
-        </p>
+<p>
+Convert JPG & JPEG images into a professional PDF.
+</p>
 
-    </header>
+</header>
 
-    <main>
+<section class="upload-box" id="uploadBox">
 
-        <section id="upload-area">
+<h2>Drag & Drop Images Here</h2>
 
-            <p>Drag & Drop Images Here</p>
+<p>or</p>
 
-            <button id="selectBtn">
+<button id="selectBtn">
+Select Images
+</button>
 
-                Select Images
+<input
+type="file"
+id="fileInput"
+accept=".jpg,.jpeg,image/jpeg"
+multiple
+hidden>
 
-            </button>
+</section>
 
-            <input
-                type="file"
-                id="fileInput"
-                accept=".jpg,.jpeg,image/jpeg"
-                multiple
-                hidden>
+<section class="settings">
 
-        </section>
+<h2>Settings</h2>
 
-    </main>
+<div class="row">
+
+<label>Page Size</label>
+
+<select id="pageSize">
+
+<option>A4</option>
+
+<option>Letter</option>
+
+<option>Legal</option>
+
+</select>
+
+</div>
+
+<div class="row">
+
+<label>Orientation</label>
+
+<select id="orientation">
+
+<option>Portrait</option>
+
+<option>Landscape</option>
+
+</select>
+
+</div>
+
+<div class="row">
+
+<label>Quality</label>
+
+<select id="quality">
+
+<option>High</option>
+
+<option>Medium</option>
+
+<option>Low</option>
+
+</select>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>Preview</h2>
+
+<div id="preview"></div>
+
+</section>
+
+<div class="center">
+
+<button id="convertBtn">
+
+Convert to PDF
+
+</button>
+
+</div>
 
 </div>
 
