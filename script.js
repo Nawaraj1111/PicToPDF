@@ -309,8 +309,11 @@ async function generatePDF(){
 
         const image = selectedImages[i];
 
-        const dataUrl = await readImage(image.file);
+        let dataUrl = await readImage(image.file);
 
+        if (image.rotation !== 0) {
+            dataUrl = await rotateImage(dataUrl, image.rotation);
+        }
         if(i>0){
 
             pdf.addPage();
@@ -339,57 +342,14 @@ async function generatePDF(){
 
         const y = (pageHeight-height)/2;
 
-        if(image.rotation!==0){
-
-            pdf.saveGraphicsState();
-
-            pdf.addImage(
-
-                dataUrl,
-
-                "JPEG",
-
-                x,
-
-                y,
-
-                width,
-
-                height,
-
-                undefined,
-
-                "FAST",
-
-                image.rotation
-
-            );
-
-            pdf.restoreGraphicsState();
-
-        }else{
-
-            pdf.addImage(
-
-                dataUrl,
-
-                "JPEG",
-
-                x,
-
-                y,
-
-                width,
-
-                height,
-
-                undefined,
-
-                "FAST"
-
-            );
-
-        }
+        pdf.addImage(
+            dataUrl,
+            "JPEG",
+            x,
+            y,
+            width,
+            height
+        );
 
     }
 
@@ -421,6 +381,45 @@ function loadImage(src){
         img.onload = ()=>resolve(img);
 
         img.src = src;
+
+    });
+
+}
+
+
+async function rotateImage(dataUrl, rotation) {
+
+    return new Promise((resolve) => {
+
+        const img = new Image();
+
+        img.onload = () => {
+
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            if (rotation % 180 === 0) {
+                canvas.width = img.width;
+                canvas.height = img.height;
+            } else {
+                canvas.width = img.height;
+                canvas.height = img.width;
+            }
+
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(rotation * Math.PI / 180);
+
+            ctx.drawImage(
+                img,
+                -img.width / 2,
+                -img.height / 2
+            );
+
+            resolve(canvas.toDataURL("image/jpeg", 1));
+
+        };
+
+        img.src = dataUrl;
 
     });
 
