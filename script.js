@@ -3,6 +3,7 @@ const fileInput = document.getElementById("fileInput");
 const selectBtn = document.getElementById("selectBtn");
 const preview = document.getElementById("preview");
 const imageCount = document.getElementById("imageCount");
+const convertBtn = document.getElementById("convertBtn");
 
 let selectedImages = [];
 
@@ -270,3 +271,157 @@ function initializeSortable(){
 requestAnimationFrame(() => {
     initializeSortable();
 });
+
+convertBtn.addEventListener("click", generatePDF);
+
+async function generatePDF(){
+
+    if(selectedImages.length===0){
+
+        alert("Please select images first.");
+
+        return;
+
+    }
+
+    const { jsPDF } = window.jspdf;
+
+    const orientation =
+        document.getElementById("orientation").value;
+
+    const pageSize =
+        document.getElementById("pageSize").value;
+
+    const quality =
+        parseFloat(document.getElementById("quality").value);
+
+    const pdf = new jsPDF({
+
+        orientation: orientation,
+
+        unit: "mm",
+
+        format: pageSize
+
+    });
+
+    for(let i=0;i<selectedImages.length;i++){
+
+        const image = selectedImages[i];
+
+        const dataUrl = await readImage(image.file);
+
+        if(i>0){
+
+            pdf.addPage();
+
+        }
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        const img = await loadImage(dataUrl);
+
+        const ratio = Math.min(
+
+            pageWidth/img.width,
+
+            pageHeight/img.height
+
+        );
+
+        const width = img.width * ratio;
+
+        const height = img.height * ratio;
+
+        const x = (pageWidth-width)/2;
+
+        const y = (pageHeight-height)/2;
+
+        if(image.rotation!==0){
+
+            pdf.saveGraphicsState();
+
+            pdf.addImage(
+
+                dataUrl,
+
+                "JPEG",
+
+                x,
+
+                y,
+
+                width,
+
+                height,
+
+                undefined,
+
+                "FAST",
+
+                image.rotation
+
+            );
+
+            pdf.restoreGraphicsState();
+
+        }else{
+
+            pdf.addImage(
+
+                dataUrl,
+
+                "JPEG",
+
+                x,
+
+                y,
+
+                width,
+
+                height,
+
+                undefined,
+
+                "FAST"
+
+            );
+
+        }
+
+    }
+
+    pdf.save("JPEG-to-PDF.pdf");
+
+}
+
+
+function readImage(file){
+
+    return new Promise((resolve)=>{
+
+        const reader = new FileReader();
+
+        reader.onload = e=>resolve(e.target.result);
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+function loadImage(src){
+
+    return new Promise((resolve)=>{
+
+        const img = new Image();
+
+        img.onload = ()=>resolve(img);
+
+        img.src = src;
+
+    });
+
+}
