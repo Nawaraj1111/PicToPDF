@@ -2,10 +2,14 @@ const uploadBox = document.getElementById("uploadBox");
 const fileInput = document.getElementById("fileInput");
 const selectBtn = document.getElementById("selectBtn");
 const preview = document.getElementById("preview");
+const imageCount = document.getElementById("imageCount");
 
 let selectedImages = [];
 
-// Open file picker
+// ============================
+// Open File Picker
+// ============================
+
 selectBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     fileInput.click();
@@ -15,14 +19,18 @@ uploadBox.addEventListener("click", () => {
     fileInput.click();
 });
 
-// File picker
+// ============================
+// Select Images
+// ============================
+
 fileInput.addEventListener("change", (e) => {
-
     addImages(e.target.files);
-
 });
 
-// Drag over
+// ============================
+// Drag & Drop
+// ============================
+
 uploadBox.addEventListener("dragover", (e) => {
 
     e.preventDefault();
@@ -31,14 +39,12 @@ uploadBox.addEventListener("dragover", (e) => {
 
 });
 
-// Drag leave
 uploadBox.addEventListener("dragleave", () => {
 
     uploadBox.style.background = "white";
 
 });
 
-// Drop
 uploadBox.addEventListener("drop", (e) => {
 
     e.preventDefault();
@@ -49,7 +55,9 @@ uploadBox.addEventListener("drop", (e) => {
 
 });
 
-// Add images
+// ============================
+// Add Images
+// ============================
 
 function addImages(files){
 
@@ -57,7 +65,13 @@ function addImages(files){
 
         if(file.type.startsWith("image/")){
 
-            selectedImages.push(file);
+            selectedImages.push({
+
+                file:file,
+
+                rotation:0
+
+            });
 
         }
 
@@ -67,25 +81,30 @@ function addImages(files){
 
 }
 
-// Render preview
+// ============================
+// Render Preview
+// ============================
 
 function renderPreview(){
 
     preview.innerHTML="";
 
+    imageCount.textContent =
+        `${selectedImages.length} Image${selectedImages.length===1?"":"s"}`;
+
     if(selectedImages.length===0){
 
         preview.innerHTML=`
-        <div class="empty-message">
-            No images selected.
-        </div>
+            <div class="empty-message">
+                No images selected.
+            </div>
         `;
 
         return;
 
     }
 
-    selectedImages.forEach(file=>{
+    selectedImages.forEach((image,index)=>{
 
         const reader=new FileReader();
 
@@ -97,37 +116,105 @@ function renderPreview(){
 
             card.innerHTML=`
 
-                <img src="${e.target.result}">
+            <div class="image-wrapper">
 
-                <div class="card-body">
+                <span class="image-number">
+                    ${index+1}
+                </span>
 
-                    <h4>${file.name}</h4>
+                <img
+                    class="preview-image"
+                    src="${e.target.result}"
+                    style="transform:rotate(${image.rotation}deg);">
 
-                    <p>${formatSize(file.size)}</p>
+            </div>
+
+            <div class="card-body">
+
+                <h4>${image.file.name}</h4>
+
+                <p>${formatSize(image.file.size)}</p>
+
+                <div class="actions">
+
+                    <button class="rotate-left">
+                        ⟲
+                    </button>
+
+                    <button class="rotate-right">
+                        ⟳
+                    </button>
+
+                    <button class="delete-btn">
+                        🗑
+                    </button>
 
                 </div>
 
+            </div>
+
             `;
+
+            // Delete
+
+            card.querySelector(".delete-btn")
+            .addEventListener("click",()=>{
+
+                selectedImages.splice(index,1);
+
+                renderPreview();
+
+            });
+
+            // Rotate Left
+
+            card.querySelector(".rotate-left")
+            .addEventListener("click",()=>{
+
+                image.rotation-=90;
+
+                renderPreview();
+
+            });
+
+            // Rotate Right
+
+            card.querySelector(".rotate-right")
+            .addEventListener("click",()=>{
+
+                image.rotation+=90;
+
+                renderPreview();
+
+            });
 
             preview.appendChild(card);
 
         }
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(image.file);
 
     });
 
 }
 
-// Format file size
+// ============================
+// Format File Size
+// ============================
 
 function formatSize(bytes){
 
-    if(bytes<1024)
+    if(bytes<1024){
+
         return bytes+" B";
 
-    if(bytes<1024*1024)
+    }
+
+    if(bytes<1024*1024){
+
         return (bytes/1024).toFixed(1)+" KB";
+
+    }
 
     return (bytes/1024/1024).toFixed(2)+" MB";
 

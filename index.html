@@ -1,134 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>JPEG to PDF Pro</title>
 
     <link rel="stylesheet" href="./index.css">
-
 </head>
-
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <header>
+    <!-- Header -->
+    <header class="header">
 
-            <h1>📄 JPEG to PDF Pro</h1>
+        <h1>📄 JPEG to PDF Pro</h1>
 
-            <p>
-                Convert JPG & JPEG images into a professional PDF.
-            </p>
+        <p>
+            Convert JPG and JPEG images into a professional PDF.
+        </p>
 
-        </header>
+    </header>
 
-        <section class="upload-box" id="uploadBox">
+    <!-- Upload Area -->
+    <section id="uploadBox" class="upload-box">
 
-            <h2>Drag & Drop Images Here</h2>
+        <div class="upload-icon">
+            📂
+        </div>
 
-            <p>or</p>
+        <h2>Drag & Drop Images Here</h2>
 
-            <button id="selectBtn">
-                Select Images
-            </button>
+        <p>or</p>
 
-            <input type="file" id="fileInput" accept=".jpg,.jpeg,image/jpeg" multiple hidden>
+        <button id="selectBtn" type="button">
+            Select Images
+        </button>
 
-        </section>
+        <input
+            type="file"
+            id="fileInput"
+            accept=".jpg,.jpeg,image/jpeg"
+            multiple
+            hidden>
 
-        
-            <section>
+    </section>
 
-            <h2>Preview</h2>
+    <!-- Settings -->
+    <section class="settings">
 
-            <div id="preview" class="preview-grid">
+        <h2>PDF Settings</h2>
 
-                <div class="empty-message">
-                    No images selected.
-                </div>
+        <div class="setting-row">
 
-            </div>
+            <label for="pageSize">Page Size</label>
 
-        </section>
+            <select id="pageSize">
 
-        <section class="settings">
+                <option value="a4">A4</option>
 
-            <h2>Settings</h2>
+                <option value="letter">Letter</option>
 
-            <div class="row">
+                <option value="legal">Legal</option>
 
-                <label>Page Size</label>
-
-                <select id="pageSize">
-
-                    <option>A4</option>
-
-                    <option>Letter</option>
-
-                    <option>Legal</option>
-
-                </select>
-
-            </div>
-
-            <div class="row">
-
-                <label>Orientation</label>
-
-                <select id="orientation">
-
-                    <option>Portrait</option>
-
-                    <option>Landscape</option>
-
-                </select>
-
-            </div>
-
-            <div class="row">
-
-                <label>Quality</label>
-
-                <select id="quality">
-
-                    <option>High</option>
-
-                    <option>Medium</option>
-
-                    <option>Low</option>
-
-                </select>
-
-            </div>
-
-        </section>
-
-        <section>
-
-            <h2>Preview</h2>
-
-            <div id="preview"></div>
-
-        </section>
-
-        <div class="center">
-
-            <button id="convertBtn">
-
-                Convert to PDF
-
-            </button>
+            </select>
 
         </div>
 
+        <div class="setting-row">
+
+            <label for="orientation">Orientation</label>
+
+            <select id="orientation">
+
+                <option value="portrait">Portrait</option>
+
+                <option value="landscape">Landscape</option>
+
+            </select>
+
+        </div>
+
+        <div class="setting-row">
+
+            <label for="quality">Image Quality</label>
+
+            <select id="quality">
+
+                <option value="1">High</option>
+
+                <option value="0.7">Medium</option>
+
+                <option value="0.5">Low</option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+    <!-- Preview -->
+    <section class="preview-section">
+
+        <div class="preview-header">
+
+            <h2>Selected Images</h2>
+
+            <span id="imageCount">0 Images</span>
+
+        </div>
+
+        <div id="preview" class="preview-grid">
+
+            <div class="empty-message">
+
+                No images selected.
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Convert Button -->
+
+    <div class="convert-section">
+
+        <button id="convertBtn" type="button">
+
+            📄 Convert to PDF
+
+        </button>
+
     </div>
 
-    <script src="./script.js"></script>
+</div>
+
+<!-- jsPDF Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- JavaScript -->
+<script src="./script.js"></script>
 
 </body>
-
 </html>
