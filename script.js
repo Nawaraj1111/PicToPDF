@@ -100,6 +100,7 @@ function renderPreview(){
             </div>
         `;
 
+
         return;
 
     }
@@ -113,6 +114,8 @@ function renderPreview(){
             const card=document.createElement("div");
 
             card.className="card";
+
+            card.dataset.index = index;
 
             card.innerHTML=`
 
@@ -196,6 +199,12 @@ function renderPreview(){
 
     });
 
+    setTimeout(() => {
+
+    initializeSortable();
+
+}, 100);
+
 }
 
 // ============================
@@ -219,3 +228,45 @@ function formatSize(bytes){
     return (bytes/1024/1024).toFixed(2)+" MB";
 
 }
+
+let sortable = null;
+
+function initializeSortable(){
+
+    if(sortable){
+
+        sortable.destroy();
+
+    }
+
+    sortable = new Sortable(preview,{
+
+        animation:200,
+
+        ghostClass:"dragging",
+
+        onEnd:function(){
+
+            const newOrder=[];
+
+            document.querySelectorAll(".card").forEach(card=>{
+
+                const index=parseInt(card.dataset.index);
+
+                newOrder.push(selectedImages[index]);
+
+            });
+
+            selectedImages = newOrder;
+
+            renderPreview();
+
+        }
+
+    });
+
+}
+
+requestAnimationFrame(() => {
+    initializeSortable();
+});

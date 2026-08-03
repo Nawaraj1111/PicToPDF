@@ -387,3 +387,23 @@ button:hover{
     }
 
 }
+
+.dragging{
+
+    opacity:.5;
+
+    transform:scale(.95);
+
+}
+
+.card{
+
+    cursor:grab;
+
+}
+
+.card:active{
+
+    cursor:grabbing;
+
+}
