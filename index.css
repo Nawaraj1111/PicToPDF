@@ -1,0 +1,96 @@
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+    font-family:Arial,sans-serif;
+
+}
+
+body{
+
+    background:#f2f4f8;
+
+}
+
+.container{
+
+    width:90%;
+    max-width:900px;
+
+    margin:40px auto;
+
+}
+
+header{
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+}
+
+header h1{
+
+    color:#1565C0;
+
+    margin-bottom:10px;
+
+}
+
+header p{
+
+    color:#555;
+
+}
+
+#upload-area{
+
+    background:white;
+
+    border:3px dashed #2196F3;
+
+    border-radius:15px;
+
+    padding:80px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+#upload-area:hover{
+
+    background:#E3F2FD;
+
+}
+
+button{
+
+    margin-top:20px;
+
+    background:#1565C0;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 30px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}
+
+button:hover{
+
+    background:#0D47A1;
+
+}
