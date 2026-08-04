@@ -64,8 +64,13 @@ function addImages(files){
 
     [...files].forEach(file=>{
 
-        if(file.type.startsWith("image/")){
+    const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png"
+    ];
 
+    if (allowedTypes.includes(file.type)) {
             selectedImages.push({
 
                 file:file,
@@ -346,18 +351,23 @@ async function generatePDF(){
 
         const y = (pageHeight-height)/2;
 
-        pdf.addImage(
-            dataUrl,
-            "JPEG",
-            x,
-            y,
-            width,
-            height
-        );
+    const imageType =
+        image.file.type === "image/png"
+            ? "PNG"
+            : "JPEG";
+
+    pdf.addImage(
+        dataUrl,
+        imageType,
+        x,
+        y,
+        width,
+        height
+    );
 
     }
 
-    pdf.save("JPEG-to-PDF.pdf");
+    pdf.save("Image-to-PDF.pdf");
 
 }
 
@@ -418,9 +428,12 @@ async function rotateImage(dataUrl, rotation) {
                 -img.width / 2,
                 -img.height / 2
             );
+        const outputType =
+            img.src.startsWith("data:image/png")
+                ? "image/png"
+                : "image/jpeg";
 
-            resolve(canvas.toDataURL("image/jpeg", 1));
-
+        resolve(canvas.toDataURL(outputType,1));
         };
 
         img.src = dataUrl;
