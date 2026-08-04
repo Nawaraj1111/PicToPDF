@@ -272,7 +272,11 @@ requestAnimationFrame(() => {
     initializeSortable();
 });
                 
-convertBtn.addEventListener("click", generatePDF);
+newFunction();
+
+function newFunction() {
+    convertBtn.addEventListener("click", generatePDF);
+}
 
 async function generatePDF(){
 
